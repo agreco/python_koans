@@ -5,6 +5,7 @@ from runner.koan import *
 
 import random
 
+
 class DiceSet:
     def __init__(self):
         self._values = None
@@ -16,7 +17,14 @@ class DiceSet:
     def roll(self, n):
         # Needs implementing!
         # Tip: random.randint(min, max) can be used to generate random numbers
-        pass
+        # pass
+
+        rand_list = list()
+        for _ in range(n):
+            rand_list.append(random.randint(1, 6))
+
+        self._values = rand_list
+
 
 class AboutDiceProject(Koan):
     def test_can_create_a_dice_set(self):
@@ -49,7 +57,7 @@ class AboutDiceProject(Koan):
         second_time = dice.values
 
         self.assertNotEqual(first_time, second_time, \
-            "Two rolls should not be equal")
+                            "Two rolls should not be equal")
 
         # THINK ABOUT IT:
         #

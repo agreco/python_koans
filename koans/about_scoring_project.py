@@ -3,6 +3,7 @@
 
 from runner.koan import *
 
+
 # Greed is a dice game where you roll up to five dice to accumulate
 # points.  The following "score" function will be used to calculate the
 # score of a single roll of the dice.
@@ -32,9 +33,38 @@ from runner.koan import *
 #
 # Your goal is to write the score method.
 
+
 def score(dice):
     # You need to write this method
-    pass
+    # pass
+    acc = 0
+    if not dice:
+        return acc
+
+    dic = {}
+
+    for num in dice:
+        if num in dic:
+            dic[num] += 1
+        else:
+            dic[num] = 1
+
+    for key in dic.keys():
+        val = dic[key]
+        if key == 1:
+            acc += 1000 + ((val - 3) * 100) if val >= 3 else 1 * 100 * val
+        elif key == 5:
+            if val > 3:
+                acc += ((val - 3) * 50) + (5 * 100)
+            elif val == 3:
+                acc += key * 100
+            else:
+                acc += val * 50
+        elif val >= 3:
+            acc += key * 100
+
+    return acc
+
 
 class AboutScoringProject(Koan):
     def test_score_of_an_empty_list_is_zero(self):
@@ -47,26 +77,26 @@ class AboutScoringProject(Koan):
         self.assertEqual(100, score([1]))
 
     def test_score_of_multiple_1s_and_5s_is_the_sum_of_individual_scores(self):
-        self.assertEqual(300, score([1,5,5,1]))
+        self.assertEqual(300, score([1, 5, 5, 1]))
 
     def test_score_of_single_2s_3s_4s_and_6s_are_zero(self):
-        self.assertEqual(0, score([2,3,4,6]))
+        self.assertEqual(0, score([2, 3, 4, 6]))
 
     def test_score_of_a_triple_1_is_1000(self):
-        self.assertEqual(1000, score([1,1,1]))
+        self.assertEqual(1000, score([1, 1, 1]))
 
     def test_score_of_other_triples_is_100x(self):
-        self.assertEqual(200, score([2,2,2]))
-        self.assertEqual(300, score([3,3,3]))
-        self.assertEqual(400, score([4,4,4]))
-        self.assertEqual(500, score([5,5,5]))
-        self.assertEqual(600, score([6,6,6]))
+        self.assertEqual(200, score([2, 2, 2]))
+        self.assertEqual(300, score([3, 3, 3]))
+        self.assertEqual(400, score([4, 4, 4]))
+        self.assertEqual(500, score([5, 5, 5]))
+        self.assertEqual(600, score([6, 6, 6]))
 
     def test_score_of_mixed_is_sum(self):
-        self.assertEqual(250, score([2,5,2,2,3]))
-        self.assertEqual(550, score([5,5,5,5]))
-        self.assertEqual(1150, score([1,1,1,5,1]))
+        self.assertEqual(250, score([2, 5, 2, 2, 3]))
+        self.assertEqual(550, score([5, 5, 5, 5]))
+        self.assertEqual(1150, score([1, 1, 1, 5, 1]))
 
     def test_ones_not_left_out(self):
-        self.assertEqual(300, score([1,2,2,2]))
-        self.assertEqual(350, score([1,5,2,2,2]))
+        self.assertEqual(300, score([1, 2, 2, 2]))
+        self.assertEqual(350, score([1, 5, 2, 2, 2]))
